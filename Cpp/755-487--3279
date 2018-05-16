@@ -1,0 +1,72 @@
+#include <iostream>
+#include <map>
+using namespace std;
+
+int main() {
+    int times, n;
+    string line, number;
+    map <string, int> occ;
+    bool dup = false;
+
+    cin >> times;
+    for (int i = 0; i < times; i++){
+        cin >> n;
+        for (int j = 0; j < n; j++){
+            cin >> line;
+            number = "";
+            dup = false;
+            for (int k = 0; k < line.length(); k++) { //remove nonalphanumeric letters and convert
+                if (isdigit(line.at(k))) {
+                    number += line.at(k);
+                }
+                else if (isalpha(line.at(k))){
+                    if (line.at(k) == 'A' || line.at(k) == 'B' || line.at(k) == 'C'){
+                        number += '2';
+                    }
+                    else if (line.at(k) == 'D' || line.at(k) == 'E' || line.at(k) == 'F'){
+                        number += '3';
+                    }
+                    else if (line.at(k) == 'G' || line.at(k) == 'H' || line.at(k) == 'I'){
+                        number += '4';
+                    }
+                    else if (line.at(k) == 'J' || line.at(k) == 'K' || line.at(k) == 'L'){
+                        number += '5';
+                    }
+                    else if (line.at(k) == 'M' || line.at(k) == 'N' || line.at(k) == 'O'){
+                        number += '6';
+                    }
+                    else if (line.at(k) == 'P' || line.at(k) == 'R' || line.at(k) == 'S'){
+                        number += '7';
+                    }
+                    else if (line.at(k) == 'T' || line.at(k) == 'U' || line.at(k) == 'V'){
+                        number += '8';
+                    }
+                    else if (line.at(k) == 'W' || line.at(k) == 'X' || line.at(k) == 'Y'){
+                        number += '9';
+                    }
+                }
+            }
+            if(occ.find(number) == occ.end()){ //Not found
+                occ.insert(pair<string,int>(number,1));
+            }
+            else{
+                occ[number]++;
+            }
+        }
+        map<string,int>::iterator it;
+        for (it = occ.begin(); it != occ.end(); it++){
+            if (it->second > 1){
+                cout << it->first.substr(0,3) << "-" << it->first.substr(3,it->first.length()) << " " << it->second << endl;
+                dup = true;
+            }
+        }
+        if (!dup){
+            cout << "No duplicates." << endl;
+        }
+        occ.clear();
+        if (i < times-1){
+            cout << endl;
+        }
+    }
+    return 0;
+}
